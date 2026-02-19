@@ -20,22 +20,12 @@ function getConfig() {
   return vscode.workspace.getConfiguration("sharpImageTools");
 }
 
-function getOutputPathForConvert(
-  inputPath: string,
-  targetFormat: string,
-  leaveOriginal: boolean
-): string {
+function getOutputPathForConvert(inputPath: string, targetFormat: string): string {
   const dir = path.dirname(inputPath);
   const ext = path.extname(inputPath);
   const baseWithoutExt = path.basename(inputPath, ext);
-
   const targetExt = FORMAT_TO_EXTENSION[targetFormat] ?? `.${targetFormat}`;
-  const outputPath = path.join(dir, `${baseWithoutExt}${targetExt}`);
-
-  if (leaveOriginal) {
-    return outputPath;
-  }
-  return outputPath;
+  return path.join(dir, `${baseWithoutExt}${targetExt}`);
 }
 
 function getOutputPathForEdit(
@@ -70,11 +60,7 @@ export async function convertToFormat(
   );
 
   const inputPath = uri.fsPath;
-  const outputPath = getOutputPathForConvert(
-    inputPath,
-    targetFormat,
-    leaveOriginal
-  );
+  const outputPath = getOutputPathForConvert(inputPath, targetFormat);
 
   const formatOptions: Record<string, unknown> = {};
   if (QUALITY_FORMATS.includes(targetFormat)) {
@@ -90,7 +76,7 @@ export async function convertToFormat(
     await pipeline.toFile(outputPath);
 
     if (!leaveOriginal && inputPath !== outputPath) {
-      fs.unlinkSync(inputPath);
+      await fs.promises.unlink(inputPath);
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -98,11 +84,9 @@ export async function convertToFormat(
     throw err;
   }
 
-  if (leaveOriginal) {
-    vscode.window.showInformationMessage(
-      `Converted to ${targetFormat}: ${path.basename(outputPath)}`
-    );
-  }
+  vscode.window.showInformationMessage(
+    `Converted to ${targetFormat}: ${path.basename(outputPath)}`
+  );
 }
 
 export type EditOperation =
@@ -168,9 +152,7 @@ export async function applyEdit(
     throw err;
   }
 
-  if (leaveOriginal) {
-    vscode.window.showInformationMessage(
-      `Edited: ${path.basename(outputPath)}`
-    );
-  }
+  vscode.window.showInformationMessage(
+    `Edited: ${path.basename(outputPath)}`
+  );
 }

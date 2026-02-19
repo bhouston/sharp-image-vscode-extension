@@ -13,29 +13,30 @@
     "url": "https://github.com/bhouston/sharp-image-tools"
   },
   "homepage": "https://github.com/bhouston/sharp-image-tools#readme",
+  "bugs": {
+    "url": "https://github.com/bhouston/sharp-image-tools/issues"
+  },
   "license": "MIT",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e2e",
+    "theme": "dark"
+  },
+  "keywords": [
+    "image",
+    "convert",
+    "sharp",
+    "webp",
+    "avif",
+    "png",
+    "jpeg",
+    "heif"
+  ],
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:sharpImageTools.convertToJpeg",
-    "onCommand:sharpImageTools.convertToPng",
-    "onCommand:sharpImageTools.convertToWebp",
-    "onCommand:sharpImageTools.convertToGif",
-    "onCommand:sharpImageTools.convertToAvif",
-    "onCommand:sharpImageTools.convertToTiff",
-    "onCommand:sharpImageTools.convertToHeif",
-    "onCommand:sharpImageTools.convertToJp2",
-    "onCommand:sharpImageTools.rotateCw",
-    "onCommand:sharpImageTools.rotateCcw",
-    "onCommand:sharpImageTools.flip",
-    "onCommand:sharpImageTools.flop",
-    "onCommand:sharpImageTools.trim",
-    "onCommand:sharpImageTools.greyscale",
-    "onCommand:sharpImageTools.negate"
+    "Formatters"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -220,7 +221,12 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "package": "vsce package"
+    "package": "npm run compile && npm install --cpu=wasm32 sharp && vsce package && npm install sharp",
+    "package:native": "npm run compile && vsce package",
+    "package:win32-x64": "npm run compile && vsce package --target win32-x64",
+    "package:linux-x64": "npm run compile && vsce package --target linux-x64",
+    "package:darwin-arm64": "npm run compile && vsce package --target darwin-arm64",
+    "package:darwin-x64": "npm run compile && vsce package --target darwin-x64"
   },
   "dependencies": {
     "sharp": "^0.33.5"
@@ -228,7 +234,7 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/vscode": "^1.85.0",
-    "typescript": "^5.3.0",
-    "@vscode/vsce": "^3.2.0"
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.3.0"
   }
 }

@@ -11,6 +11,21 @@ A VS Code and Cursor extension that adds image conversion and editing to the Exp
 
 To install from VSIX: build with `npm run package`, then use **Extensions: Install from VSIX...** and select the generated `.vsix` file.
 
+The default `npm run package` uses sharp's WebAssembly build, producing a **single VSIX that works on Windows, macOS, and Linux**. No native bindings—portable out of the box.
+
+If you encounter load errors when running the extension (e.g. "Cannot read properties of undefined" or SharedArrayBuffer-related errors), the WASM build may be incompatible with your VS Code's Node.js. Use `npm run package:native` for a native build, or the platform-specific scripts below.
+
+### Platform-specific (native, faster)
+
+For best performance when targeting a specific platform:
+
+```bash
+npm run package:win32-x64   # on Windows
+npm run package:linux-x64   # on Linux
+npm run package:darwin-arm64 # on macOS ARM (M1/M2)
+npm run package:darwin-x64  # on macOS Intel
+```
+
 ## Usage
 
 Right-click an image file in the Explorer. Two submenus appear:
