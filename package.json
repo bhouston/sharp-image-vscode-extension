@@ -1,0 +1,234 @@
+{
+  "name": "sharp-image-tools",
+  "displayName": "Sharp Image Tools",
+  "description": "Convert and edit images from the Explorer context menu using the sharp library",
+  "version": "0.1.0",
+  "publisher": "bhouston",
+  "author": {
+    "name": "Ben Houston",
+    "url": "https://benhouston3d.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bhouston/sharp-image-tools"
+  },
+  "homepage": "https://github.com/bhouston/sharp-image-tools#readme",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:sharpImageTools.convertToJpeg",
+    "onCommand:sharpImageTools.convertToPng",
+    "onCommand:sharpImageTools.convertToWebp",
+    "onCommand:sharpImageTools.convertToGif",
+    "onCommand:sharpImageTools.convertToAvif",
+    "onCommand:sharpImageTools.convertToTiff",
+    "onCommand:sharpImageTools.convertToHeif",
+    "onCommand:sharpImageTools.convertToJp2",
+    "onCommand:sharpImageTools.rotateCw",
+    "onCommand:sharpImageTools.rotateCcw",
+    "onCommand:sharpImageTools.flip",
+    "onCommand:sharpImageTools.flop",
+    "onCommand:sharpImageTools.trim",
+    "onCommand:sharpImageTools.greyscale",
+    "onCommand:sharpImageTools.negate"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "sharpImageTools.convertToJpeg",
+        "title": "Convert to JPEG"
+      },
+      {
+        "command": "sharpImageTools.convertToPng",
+        "title": "Convert to PNG"
+      },
+      {
+        "command": "sharpImageTools.convertToWebp",
+        "title": "Convert to WebP"
+      },
+      {
+        "command": "sharpImageTools.convertToGif",
+        "title": "Convert to GIF"
+      },
+      {
+        "command": "sharpImageTools.convertToAvif",
+        "title": "Convert to AVIF"
+      },
+      {
+        "command": "sharpImageTools.convertToTiff",
+        "title": "Convert to TIFF"
+      },
+      {
+        "command": "sharpImageTools.convertToHeif",
+        "title": "Convert to HEIF"
+      },
+      {
+        "command": "sharpImageTools.convertToJp2",
+        "title": "Convert to JP2"
+      },
+      {
+        "command": "sharpImageTools.rotateCw",
+        "title": "Rotate 90° CW"
+      },
+      {
+        "command": "sharpImageTools.rotateCcw",
+        "title": "Rotate 90° CCW"
+      },
+      {
+        "command": "sharpImageTools.flip",
+        "title": "Flip"
+      },
+      {
+        "command": "sharpImageTools.flop",
+        "title": "Flop"
+      },
+      {
+        "command": "sharpImageTools.trim",
+        "title": "Trim"
+      },
+      {
+        "command": "sharpImageTools.greyscale",
+        "title": "Greyscale"
+      },
+      {
+        "command": "sharpImageTools.negate",
+        "title": "Negate"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "submenu": "sharpImageTools.convertImage",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i",
+          "group": "7_modification"
+        },
+        {
+          "submenu": "sharpImageTools.editImage",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i",
+          "group": "7_modification"
+        }
+      ],
+      "sharpImageTools.convertImage": [
+        {
+          "command": "sharpImageTools.convertToJpeg",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.jpg' && resourceExtname != '.jpeg'"
+        },
+        {
+          "command": "sharpImageTools.convertToPng",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.png'"
+        },
+        {
+          "command": "sharpImageTools.convertToWebp",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.webp'"
+        },
+        {
+          "command": "sharpImageTools.convertToGif",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.gif'"
+        },
+        {
+          "command": "sharpImageTools.convertToAvif",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.avif'"
+        },
+        {
+          "command": "sharpImageTools.convertToTiff",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.tiff' && resourceExtname != '.tif'"
+        },
+        {
+          "command": "sharpImageTools.convertToHeif",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.heic' && resourceExtname != '.heif'"
+        },
+        {
+          "command": "sharpImageTools.convertToJp2",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.jp2'"
+        }
+      ],
+      "sharpImageTools.editImage": [
+        {
+          "command": "sharpImageTools.rotateCw",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i"
+        },
+        {
+          "command": "sharpImageTools.rotateCcw",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i"
+        },
+        {
+          "command": "sharpImageTools.flip",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i"
+        },
+        {
+          "command": "sharpImageTools.flop",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i"
+        },
+        {
+          "command": "sharpImageTools.trim",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i"
+        },
+        {
+          "command": "sharpImageTools.greyscale",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i"
+        },
+        {
+          "command": "sharpImageTools.negate",
+          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "sharpImageTools.convertImage",
+        "label": "Convert Image"
+      },
+      {
+        "id": "sharpImageTools.editImage",
+        "label": "Edit Image"
+      }
+    ],
+    "configuration": {
+      "title": "Sharp Image Tools",
+      "properties": {
+        "sharpImageTools.conversionQuality": {
+          "type": "number",
+          "default": 95,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Quality for JPEG, WebP, AVIF and other quality-capable formats (0-100)"
+        },
+        "sharpImageTools.leaveOriginalWhenChangingFormat": {
+          "type": "boolean",
+          "default": false,
+          "description": "When converting format, leave the original file unchanged and write to a new file (same name, target extension)"
+        },
+        "sharpImageTools.leaveOriginalWhenEditing": {
+          "type": "boolean",
+          "default": false,
+          "description": "When editing (rotate, flip, etc.), leave the original file unchanged and write to a new file with the editing suffix"
+        },
+        "sharpImageTools.editingSuffix": {
+          "type": "string",
+          "default": "-edit",
+          "description": "Suffix inserted before the file extension when leaving original on edit (e.g. photo.jpg → photo-edit.jpg). Multiple edits stack: photo-edit.jpg → photo-edit-edit.jpg"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^3.2.0"
+  }
+}
