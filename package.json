@@ -1,5 +1,5 @@
 {
-  "name": "sharp-image-tools",
+  "name": "sharp-image",
   "displayName": "Sharp Image Tools",
   "description": "Convert and edit images from the Explorer context menu using the sharp library",
   "version": "0.1.0",
@@ -10,11 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bhouston/sharp-image-tools"
+    "url": "https://github.com/bhouston/sharp-image"
   },
-  "homepage": "https://github.com/bhouston/sharp-image-tools#readme",
+  "homepage": "https://github.com/bhouston/sharp-image#readme",
   "bugs": {
-    "url": "https://github.com/bhouston/sharp-image-tools/issues"
+    "url": "https://github.com/bhouston/sharp-image/issues"
   },
   "license": "MIT",
   "icon": "images/icon.png",
@@ -118,35 +118,35 @@
       "sharpImageTools.convertImage": [
         {
           "command": "sharpImageTools.convertToJpeg",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.jpg' && resourceExtname != '.jpeg'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.jpg' && resourceExtname != '.jpeg') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         },
         {
           "command": "sharpImageTools.convertToPng",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.png'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.png') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         },
         {
           "command": "sharpImageTools.convertToWebp",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.webp'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.webp') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         },
         {
           "command": "sharpImageTools.convertToGif",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.gif'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.gif') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         },
         {
           "command": "sharpImageTools.convertToAvif",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.avif'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.avif') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         },
         {
           "command": "sharpImageTools.convertToTiff",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.tiff' && resourceExtname != '.tif'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.tiff' && resourceExtname != '.tif') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         },
         {
           "command": "sharpImageTools.convertToHeif",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.heic' && resourceExtname != '.heif'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.heic' && resourceExtname != '.heif') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         },
         {
           "command": "sharpImageTools.convertToJp2",
-          "when": "resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.jp2'"
+          "when": "(resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i && resourceExtname != '.jp2') || (listMultiSelection && resourceExtname =~ /\\.(jpg|jpeg|png|webp|gif|avif|tiff|tif|svg|heic|heif|jp2)$/i)"
         }
       ],
       "sharpImageTools.editImage": [
@@ -221,12 +221,7 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "package": "npm run compile && npm install --cpu=wasm32 sharp && vsce package && npm install sharp",
-    "package:native": "npm run compile && vsce package",
-    "package:win32-x64": "npm run compile && vsce package --target win32-x64",
-    "package:linux-x64": "npm run compile && vsce package --target linux-x64",
-    "package:darwin-arm64": "npm run compile && vsce package --target darwin-arm64",
-    "package:darwin-x64": "npm run compile && vsce package --target darwin-x64"
+    "package": "npm run compile && node scripts/install-all-platforms.js && vsce package"
   },
   "dependencies": {
     "sharp": "^0.33.5"

@@ -9,30 +9,21 @@ A VS Code and Cursor extension that adds image conversion and editing to the Exp
 - **VS Code**: Install from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/) (when published) or install from VSIX.
 - **Cursor**: Install from [Open VSX](https://open-vsx.org/) (when published) or install from VSIX.
 
-To install from VSIX: build with `npm run package`, then use **Extensions: Install from VSIX...** and select the generated `.vsix` file.
+To install from VSIX: run `npm run package`, then use **Extensions: Install from VSIX...** and select the generated `.vsix` file.
 
-The default `npm run package` uses sharp's WebAssembly build, producing a **single VSIX that works on Windows, macOS, and Linux**. No native bindings—portable out of the box.
-
-If you encounter load errors when running the extension (e.g. "Cannot read properties of undefined" or SharedArrayBuffer-related errors), the WASM build may be incompatible with your VS Code's Node.js. Use `npm run package:native` for a native build, or the platform-specific scripts below.
-
-### Platform-specific (native, faster)
-
-For best performance when targeting a specific platform:
-
-```bash
-npm run package:win32-x64   # on Windows
-npm run package:linux-x64   # on Linux
-npm run package:darwin-arm64 # on macOS ARM (M1/M2)
-npm run package:darwin-x64  # on macOS Intel
-```
+`npm run package` produces a **single ~40 MB VSIX with native binaries for all major platforms** — Windows x64, macOS arm64/x64, and Linux x64/arm64. It works out of the box on any of those platforms without recompilation.
 
 ## Usage
 
 Right-click an image file in the Explorer. Two submenus appear:
 
+### Multi-select
+
+You can select multiple files in the Explorer and right-click to run Convert or Edit on all of them. Only image files in the selection are processed; non-image files are skipped silently (no notification). For **Convert Image** with multiple selection, all target formats are shown regardless of each file’s current format, so you can e.g. select a mix of PNG and WebP and convert all to JPEG in one action. No success toasts are shown when the operation completes; a progress indicator appears when processing two or more images.
+
 ### Convert Image
 
-Convert the image to another format. The current format is excluded from the list. Supported target formats:
+Convert the image to another format. With a single file, the current format is excluded from the list. Supported target formats:
 
 - JPEG, PNG, WebP, GIF, AVIF, TIFF, HEIF, JP2
 

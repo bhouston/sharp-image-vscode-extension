@@ -45,9 +45,14 @@ function getOutputPathForEdit(
   return path.join(dir, `${newBase}${ext}`);
 }
 
+export interface ConvertOptions {
+  silent?: boolean;
+}
+
 export async function convertToFormat(
   uri: vscode.Uri,
-  targetFormat: string
+  targetFormat: string,
+  options?: ConvertOptions
 ): Promise<void> {
   const config = getConfig();
   const quality = Math.max(
@@ -84,9 +89,11 @@ export async function convertToFormat(
     throw err;
   }
 
-  vscode.window.showInformationMessage(
-    `Converted to ${targetFormat}: ${path.basename(outputPath)}`
-  );
+  if (!options?.silent) {
+    vscode.window.showInformationMessage(
+      `Converted to ${targetFormat}: ${path.basename(outputPath)}`
+    );
+  }
 }
 
 export type EditOperation =
@@ -98,9 +105,14 @@ export type EditOperation =
   | "greyscale"
   | "negate";
 
+export interface EditOptions {
+  silent?: boolean;
+}
+
 export async function applyEdit(
   uri: vscode.Uri,
-  operation: EditOperation
+  operation: EditOperation,
+  options?: EditOptions
 ): Promise<void> {
   const config = getConfig();
   const leaveOriginal = config.get<boolean>(
@@ -152,7 +164,9 @@ export async function applyEdit(
     throw err;
   }
 
-  vscode.window.showInformationMessage(
-    `Edited: ${path.basename(outputPath)}`
-  );
+  if (!options?.silent) {
+    vscode.window.showInformationMessage(
+      `Edited: ${path.basename(outputPath)}`
+    );
+  }
 }
