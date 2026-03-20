@@ -42,12 +42,12 @@ Convert the image to another format. With a single file, the current format is e
 
 ## Configuration
 
-| Setting | Type | Default | Description |
-|---------|------|---------|-------------|
-| `sharpImageTools.conversionQuality` | number | 95 | Quality for JPEG, WebP, AVIF, etc. (0–100) |
-| `sharpImageTools.leaveOriginalWhenChangingFormat` | boolean | false | When converting, leave the original file and write to a new file (same name, target extension) |
-| `sharpImageTools.leaveOriginalWhenEditing` | boolean | false | When editing, leave the original and write to a new file with the editing suffix |
-| `sharpImageTools.editingSuffix` | string | "-edit" | Suffix used when leaving original on edit. Multiple edits stack: `photo.jpg` → `photo-edit.jpg` → `photo-edit-edit.jpg` |
+| Setting                                           | Type    | Default | Description                                                                                                             |
+| ------------------------------------------------- | ------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `sharpImageTools.conversionQuality`               | number  | 95      | Quality for JPEG, WebP, AVIF, etc. (0–100)                                                                              |
+| `sharpImageTools.leaveOriginalWhenChangingFormat` | boolean | false   | When converting, leave the original file and write to a new file (same name, target extension)                          |
+| `sharpImageTools.leaveOriginalWhenEditing`        | boolean | false   | When editing, leave the original and write to a new file with the editing suffix                                        |
+| `sharpImageTools.editingSuffix`                   | string  | "-edit" | Suffix used when leaving original on edit. Multiple edits stack: `photo.jpg` → `photo-edit.jpg` → `photo-edit-edit.jpg` |
 
 ## Replace vs Save-As Behavior
 

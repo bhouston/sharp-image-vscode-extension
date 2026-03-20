@@ -11,9 +11,7 @@ const { execSync } = require('child_process');
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
 
-const sharpPkg = JSON.parse(
-  readFileSync(resolve(__dirname, '../node_modules/sharp/package.json'), 'utf8')
-);
+const sharpPkg = JSON.parse(readFileSync(resolve(__dirname, '../node_modules/sharp/package.json'), 'utf8'));
 const optDeps = sharpPkg.optionalDependencies ?? {};
 
 // The platforms we want bundled. Covers Windows x64, macOS arm64/x64, Linux x64/arm64.
@@ -29,9 +27,7 @@ const desired = [
   '@img/sharp-win32-x64',
 ];
 
-const packages = desired
-  .filter((pkg) => optDeps[pkg])
-  .map((pkg) => `${pkg}@${optDeps[pkg]}`);
+const packages = desired.filter((pkg) => optDeps[pkg]).map((pkg) => `${pkg}@${optDeps[pkg]}`);
 
 console.log('Installing platform-specific sharp packages for universal build:');
 packages.forEach((pkg) => console.log(`  ${pkg}`));

@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+cd "$(git rev-parse --show-toplevel)" && npm run format && npm run tsc && npm run lint:fix

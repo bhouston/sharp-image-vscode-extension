@@ -1,24 +1,20 @@
-import * as path from "path";
-import * as vscode from "vscode";
-import {
-  convertToFormat,
-  applyEdit,
-  type EditOperation,
-} from "./sharpOperations";
+import * as path from 'path';
+import * as vscode from 'vscode';
+import { convertToFormat, applyEdit, type EditOperation } from './sharpOperations';
 
 const SUPPORTED_IMAGE_EXTENSIONS = new Set([
-  ".jpg",
-  ".jpeg",
-  ".png",
-  ".webp",
-  ".gif",
-  ".avif",
-  ".tiff",
-  ".tif",
-  ".svg",
-  ".heic",
-  ".heif",
-  ".jp2",
+  '.jpg',
+  '.jpeg',
+  '.png',
+  '.webp',
+  '.gif',
+  '.avif',
+  '.tiff',
+  '.tif',
+  '.svg',
+  '.heic',
+  '.heif',
+  '.jp2',
 ]);
 
 function filterImageUris(uris: vscode.Uri[]): vscode.Uri[] {
@@ -28,10 +24,7 @@ function filterImageUris(uris: vscode.Uri[]): vscode.Uri[] {
   });
 }
 
-function normalizeUris(
-  uri: vscode.Uri | undefined,
-  selectedResources?: vscode.Uri[]
-): vscode.Uri[] {
+function normalizeUris(uri: vscode.Uri | undefined, selectedResources?: vscode.Uri[]): vscode.Uri[] {
   const first = uri ?? getSelectedFileUri();
   if (!first) {
     return [];
@@ -78,17 +71,14 @@ async function runConvert(uris: vscode.Uri[], format: string): Promise<void> {
           }
           progress.report({ increment });
         }
-      }
+      },
     );
   } else {
     await run();
   }
 }
 
-async function runEdit(
-  uris: vscode.Uri[],
-  operation: EditOperation
-): Promise<void> {
+async function runEdit(uris: vscode.Uri[], operation: EditOperation): Promise<void> {
   const run = async () => {
     for (const u of uris) {
       try {
@@ -102,7 +92,7 @@ async function runEdit(
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Editing images…",
+        title: 'Editing images…',
         cancellable: false,
       },
       async (progress) => {
@@ -115,7 +105,7 @@ async function runEdit(
           }
           progress.report({ increment });
         }
-      }
+      },
     );
   } else {
     await run();
@@ -123,69 +113,50 @@ async function runEdit(
 }
 
 export function activate(context: vscode.ExtensionContext): void {
-  const convertFormats = [
-    "jpeg",
-    "png",
-    "webp",
-    "gif",
-    "avif",
-    "tiff",
-    "heif",
-    "jp2",
-  ] as const;
+  const convertFormats = ['jpeg', 'png', 'webp', 'gif', 'avif', 'tiff', 'heif', 'jp2'] as const;
 
   for (const format of convertFormats) {
     const command = `sharpImageTools.convertTo${format.charAt(0).toUpperCase()}${format.slice(1)}` as const;
     context.subscriptions.push(
-      vscode.commands.registerCommand(
-        command,
-        async (uri: vscode.Uri, selectedResources?: vscode.Uri[]) => {
-          const all = normalizeUris(uri, selectedResources);
-          if (!all.length) {
-            vscode.window.showErrorMessage(
-              "Sharp Image Tools: No file selected. Right-click an image in the Explorer."
-            );
-            return;
-          }
-          const uris = filterImageUris(all);
-          if (!uris.length) {
-            return;
-          }
-          await runConvert(uris, format);
+      vscode.commands.registerCommand(command, async (uri: vscode.Uri, selectedResources?: vscode.Uri[]) => {
+        const all = normalizeUris(uri, selectedResources);
+        if (!all.length) {
+          vscode.window.showErrorMessage('Sharp Image Tools: No file selected. Right-click an image in the Explorer.');
+          return;
         }
-      )
+        const uris = filterImageUris(all);
+        if (!uris.length) {
+          return;
+        }
+        await runConvert(uris, format);
+      }),
     );
   }
 
   const editCommands: { command: string; operation: EditOperation }[] = [
-    { command: "sharpImageTools.rotateCw", operation: "rotateCw" },
-    { command: "sharpImageTools.rotateCcw", operation: "rotateCcw" },
-    { command: "sharpImageTools.flip", operation: "flip" },
-    { command: "sharpImageTools.flop", operation: "flop" },
-    { command: "sharpImageTools.trim", operation: "trim" },
-    { command: "sharpImageTools.greyscale", operation: "greyscale" },
-    { command: "sharpImageTools.negate", operation: "negate" },
+    { command: 'sharpImageTools.rotateCw', operation: 'rotateCw' },
+    { command: 'sharpImageTools.rotateCcw', operation: 'rotateCcw' },
+    { command: 'sharpImageTools.flip', operation: 'flip' },
+    { command: 'sharpImageTools.flop', operation: 'flop' },
+    { command: 'sharpImageTools.trim', operation: 'trim' },
+    { command: 'sharpImageTools.greyscale', operation: 'greyscale' },
+    { command: 'sharpImageTools.negate', operation: 'negate' },
   ];
 
   for (const { command, operation } of editCommands) {
     context.subscriptions.push(
-      vscode.commands.registerCommand(
-        command,
-        async (uri: vscode.Uri, selectedResources?: vscode.Uri[]) => {
-          const all = normalizeUris(uri, selectedResources);
-          if (!all.length) {
-            vscode.window.showErrorMessage(
-              "Sharp Image Tools: No file selected. Right-click an image in the Explorer."
-            );
-            return;
-          }
-          const uris = filterImageUris(all);
-          if (!uris.length) {
-            return;
-          }
-          await runEdit(uris, operation);
+      vscode.commands.registerCommand(command, async (uri: vscode.Uri, selectedResources?: vscode.Uri[]) => {
+        const all = normalizeUris(uri, selectedResources);
+        if (!all.length) {
+          vscode.window.showErrorMessage('Sharp Image Tools: No file selected. Right-click an image in the Explorer.');
+          return;
         }
-      )
+        const uris = filterImageUris(all);
+        if (!uris.length) {
+          return;
+        }
+        await runEdit(uris, operation);
+      }),
     );
   }
 }

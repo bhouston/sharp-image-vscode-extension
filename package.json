@@ -1,44 +1,59 @@
 {
   "name": "sharp-image",
   "displayName": "Sharp Image Tools",
-  "description": "Convert and edit images from the Explorer context menu using the sharp library",
   "version": "0.1.0",
-  "publisher": "bhouston",
+  "description": "Convert and edit images from the Explorer context menu using the sharp library",
+  "categories": [
+    "Formatters"
+  ],
+  "keywords": [
+    "avif",
+    "convert",
+    "heif",
+    "image",
+    "jpeg",
+    "png",
+    "sharp",
+    "webp"
+  ],
+  "homepage": "https://github.com/bhouston/sharp-image-vscode-extension#readme",
+  "bugs": {
+    "url": "https://github.com/bhouston/sharp-image-vscode-extension/issues"
+  },
+  "license": "MIT",
   "author": {
     "name": "Ben Houston",
     "url": "https://benhouston3d.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bhouston/sharp-image"
+    "url": "https://github.com/bhouston/sharp-image-vscode-extension"
   },
-  "homepage": "https://github.com/bhouston/sharp-image#readme",
-  "bugs": {
-    "url": "https://github.com/bhouston/sharp-image/issues"
-  },
-  "license": "MIT",
-  "icon": "images/icon.png",
-  "galleryBanner": {
-    "color": "#1e1e2e",
-    "theme": "dark"
-  },
-  "keywords": [
-    "image",
-    "convert",
-    "sharp",
-    "webp",
-    "avif",
-    "png",
-    "jpeg",
-    "heif"
-  ],
-  "engines": {
-    "vscode": "^1.85.0"
-  },
-  "categories": [
-    "Formatters"
-  ],
+  "publisher": "benhouston3d",
   "main": "./dist/extension.js",
+  "scripts": {
+    "prepare": "husky",
+    "build": "npm run tsc",
+    "compile": "tsc -b",
+    "watch": "tsc -watch -p ./",
+    "tsc": "tsc -b",
+    "format": "oxfmt .",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "package": "npm run compile && node scripts/install-all-platforms.js && vsce package"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.2.0",
+    "husky": "^9.1.7",
+    "oxfmt": "^0.41.0",
+    "oxlint": "^1.56.0",
+    "typescript": "^5.3.0"
+  },
   "contributes": {
     "commands": [
       {
@@ -218,18 +233,12 @@
       }
     }
   },
-  "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "package": "npm run compile && node scripts/install-all-platforms.js && vsce package"
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e2e",
+    "theme": "dark"
   },
-  "dependencies": {
-    "sharp": "^0.33.5"
-  },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/vscode": "^1.85.0",
-    "@vscode/vsce": "^3.2.0",
-    "typescript": "^5.3.0"
+  "engines": {
+    "vscode": "^1.85.0"
   }
 }
