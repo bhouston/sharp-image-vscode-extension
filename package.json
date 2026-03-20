@@ -33,14 +33,14 @@
   "main": "./dist/extension.js",
   "scripts": {
     "prepare": "husky",
-    "build": "npm run tsc",
+    "build": "pnpm run tsc",
     "compile": "tsc -b",
     "watch": "tsc -watch -p ./",
     "tsc": "tsc -b",
     "format": "oxfmt .",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
-    "package": "npm run compile && node scripts/install-all-platforms.js && vsce package"
+    "package": "pnpm run compile && node scripts/install-all-platforms.js && vsce package"
   },
   "dependencies": {
     "sharp": "^0.33.5"
