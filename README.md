@@ -2,8 +2,6 @@
 
 A VS Code and Cursor extension that adds image conversion and editing to the Explorer context menu. Right-click any supported image file to convert it to another format or apply edits (rotate, flip, trim, etc.) using the [sharp](https://sharp.pixelplumbing.com/) library.
 
-**Author:** [Ben Houston](https://ben3d.ca) | [GitHub](https://github.com/bhouston)
-
 ## Installation
 
 - **VS Code**: Install from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/) (when published) or install from VSIX.
@@ -58,3 +56,7 @@ Enable **Leave original when changing format** or **Leave original when editing*
 ## License
 
 MIT
+
+## Author
+
+[Ben Houston](https://ben3d.ca), Sponsored by [Land of Assets](https://landofassets.com)

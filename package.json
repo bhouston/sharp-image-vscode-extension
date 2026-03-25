@@ -21,10 +21,7 @@
     "url": "https://github.com/bhouston/sharp-image-vscode-extension/issues"
   },
   "license": "MIT",
-  "author": {
-    "name": "Ben Houston",
-    "url": "https://ben3d.ca"
-  },
+  "author": "Ben Houston <ben@ben3d.ca> (https://ben3d.ca)",
   "repository": {
     "type": "git",
     "url": "https://github.com/bhouston/sharp-image-vscode-extension"
