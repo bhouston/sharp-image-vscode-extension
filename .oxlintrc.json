@@ -6,6 +6,9 @@
     "suspicious": "warn"
   },
   "plugins": ["eslint", "typescript", "oxc", "unicorn"],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  },
   "overrides": [
     {
       "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
