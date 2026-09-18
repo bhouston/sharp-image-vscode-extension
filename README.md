@@ -11,6 +11,10 @@ To install from VSIX: run `npm run package`, then use **Extensions: Install from
 
 `npm run package` produces a **single ~40 MB VSIX with native binaries for all major platforms** — Windows x64, macOS arm64/x64, and Linux x64/arm64. It works out of the box on any of those platforms without recompilation.
 
+## Releasing
+
+Releases are automated with [semantic-release](https://semantic-release.gitbook.io/) from [Conventional Commits](https://www.conventionalcommits.org/) on `main`. See [RELEASING.md](RELEASING.md) for how to dispatch a release and one-time setup.
+
 ## Usage
 
 Right-click an image file in the Explorer. Two submenus appear:

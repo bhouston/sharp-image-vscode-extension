@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Validate and preview the release without publishing'
+        type: boolean
+        default: false
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require dispatch against main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Release must be dispatched with ref=main (got ${{ github.ref }})."
+          exit 1
+  checks:
+    needs: guard
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+  release:
+    needs: checks
+    # Enable only after VSCE_PAT/OVSX_PAT secrets are configured.
+    if: vars.VSCE_RELEASE_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v5
+        with:
+          version: 11.0.8
+          run_install: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run compile
+      - name: Release extension and changelog
+        run: pnpm release ${{ inputs.dry_run && '--dry-run' || '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      - name: Summary
+        if: inputs.dry_run
+        run: echo "Dry run complete — nothing was published, no tag was created." >> "$GITHUB_STEP_SUMMARY"
