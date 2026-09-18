@@ -8,8 +8,8 @@ Shared workflow for human contributors and coding agents (Claude, Codex).
 1. Before implementing a feature or fix, open a GitHub issue (or reuse a
    matching existing one). Include a description, motivation, and acceptance
    criteria.
-2. Branch from current `origin/main`, named `<type>/<issue>-<short-description>`,
-   e.g. `feat/12-avif-quality-option`. Never commit directly to `main`.
+2. Branch from current `origin/main`. Any branch name is fine. Never commit
+   directly to `main`.
 3. Use Conventional Commits for every commit: `type(scope): description`.
    Types: `feat`, `fix`, `perf`, `docs`, `chore`, `refactor`, `test`, `style`,
    `build`, `ci`, `revert`. Husky's `commit-msg` hook checks this locally via
