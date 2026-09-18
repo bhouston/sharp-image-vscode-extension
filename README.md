@@ -57,6 +57,10 @@ By default, the extension **replaces** the existing file (overwrites for edits; 
 
 Enable **Leave original when changing format** or **Leave original when editing** to write to new files instead.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue → branch → PR workflow and local checks.
+
 ## License
 
 MIT
