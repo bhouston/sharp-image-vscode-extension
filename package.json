@@ -37,19 +37,36 @@
     "format": "oxfmt .",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
-    "package": "pnpm run compile && node scripts/install-all-platforms.js && vsce package"
+    "package": "pnpm run compile && node scripts/install-all-platforms.js && vsce package",
+    "release": "semantic-release"
   },
   "dependencies": {
     "sharp": "^0.33.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^12.0.9",
+    "@semantic-release/release-notes-generator": "^14.1.1",
     "@types/node": "^20.0.0",
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^3.2.0",
     "husky": "^9.1.7",
-    "oxfmt": "^0.41.0",
-    "oxlint": "^1.56.0",
+    "lint-staged": "^17.3.0",
+    "ovsx": "^1.2.0",
+    "oxfmt": "^0.58.0",
+    "oxlint": "^1.73.0",
+    "semantic-release": "^25.0.9",
     "typescript": "^5.3.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "oxfmt",
+      "oxlint --fix"
+    ],
+    "*.{json,jsonc,md,mdx,css,html,yml,yaml}": "oxfmt"
   },
   "contributes": {
     "commands": [
