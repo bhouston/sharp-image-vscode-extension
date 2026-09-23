@@ -2,3 +2,11 @@ allowBuilds:
   '@vscode/vsce-sign': true
   keytar: true
   sharp: true
+
+overrides:
+  # @commitlint/config-conventional pulls in conventional-changelog-conventionalcommits@10,
+  # which requires conventional-changelog-writer@9+. semantic-release's commit-analyzer and
+  # release-notes-generator both pin conventional-changelog-writer@8.4.0, and semantic-release
+  # loads the "conventionalcommits" preset by package name, so it resolves the incompatible v10
+  # and fails in generateNotes. Pin to a v8 release with no writer version constraint.
+  conventional-changelog-conventionalcommits: ^8.0.0
