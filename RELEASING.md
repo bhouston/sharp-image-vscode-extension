@@ -12,13 +12,12 @@ Add `-f dry_run=true` to validate versioning and the changelog without publishin
 
 ## One-time activation
 
-The workflow is installed in `.github/workflows/release.yml`. Publishing is disabled until the repository Actions variable `VSCE_RELEASE_ENABLED` is set to `true`.
+The workflow is installed in `.github/workflows/release.yml` and requires two repository secrets:
 
-1. Configure the repository secrets:
-   - `VSCE_PAT` — an Azure DevOps personal access token for the `benhouston3d` publisher, used to publish to the VS Code Marketplace.
-   - `OVSX_PAT` — an Open VSX access token, used to publish to the Open VSX Registry (the registry Cursor and other VS Code-compatible editors use).
-2. Set `gh variable set VSCE_RELEASE_ENABLED --body true` once the secrets above are configured.
-3. Dispatch `Release` on `main` (see above) when ready to publish.
+- `VSCE_PAT` — an Azure DevOps personal access token for the `benhouston3d` publisher, used to publish to the VS Code Marketplace.
+- `OVSX_PAT` — an Open VSX access token, used to publish to the Open VSX Registry (the registry Cursor and other VS Code-compatible editors use).
+
+Both are already configured. Dispatch `Release` on `main` (see above) when ready to publish.
 
 ## Versioning and artifacts
 

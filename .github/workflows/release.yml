@@ -30,8 +30,6 @@ jobs:
     secrets: inherit
   release:
     needs: checks
-    # Enable only after VSCE_PAT/OVSX_PAT secrets are configured.
-    if: vars.VSCE_RELEASE_ENABLED == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
