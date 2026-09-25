@@ -7,7 +7,6 @@ export default {
   plugins: [
     ['@semantic-release/commit-analyzer', { preset: 'conventionalcommits' }],
     ['@semantic-release/release-notes-generator', { preset: 'conventionalcommits' }],
-    ['@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' }],
     {
       prepare: (_pluginConfig, { nextRelease }) => {
         // Not npm-published; pin package.json to the shared version stream so
@@ -21,7 +20,7 @@ export default {
     [
       '@semantic-release/github',
       {
-        assets: ['CHANGELOG.md', '*.vsix'],
+        assets: ['*.vsix'],
         successComment: false,
         failComment: false,
         releasedLabels: false,
