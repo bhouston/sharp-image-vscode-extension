@@ -3,7 +3,9 @@
 src/**
 .gitignore
 tsconfig.json
+tsconfig.base.json
 **/*.map
 **/*.ts
 logo.png
 .env
+coverage/**

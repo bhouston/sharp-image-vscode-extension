@@ -2,43 +2,12 @@ import * as path from 'path';
 import * as fs from 'fs';
 import sharp from 'sharp';
 import * as vscode from 'vscode';
-
-const FORMAT_TO_EXTENSION: Record<string, string> = {
-  jpeg: '.jpg',
-  png: '.png',
-  webp: '.webp',
-  gif: '.gif',
-  avif: '.avif',
-  tiff: '.tiff',
-  heif: '.heif',
-  jp2: '.jp2',
-};
+import { getOutputPathForConvert, getOutputPathForEdit } from './pathHelpers';
 
 const QUALITY_FORMATS = ['jpeg', 'webp', 'avif', 'tiff', 'jp2', 'heif'];
 
 function getConfig() {
   return vscode.workspace.getConfiguration('sharpImageTools');
-}
-
-function getOutputPathForConvert(inputPath: string, targetFormat: string): string {
-  const dir = path.dirname(inputPath);
-  const ext = path.extname(inputPath);
-  const baseWithoutExt = path.basename(inputPath, ext);
-  const targetExt = FORMAT_TO_EXTENSION[targetFormat] ?? `.${targetFormat}`;
-  return path.join(dir, `${baseWithoutExt}${targetExt}`);
-}
-
-function getOutputPathForEdit(inputPath: string, leaveOriginal: boolean, editingSuffix: string): string {
-  if (!leaveOriginal) {
-    return inputPath;
-  }
-
-  const dir = path.dirname(inputPath);
-  const ext = path.extname(inputPath);
-  const baseWithSuffix = path.basename(inputPath, ext);
-
-  const newBase = baseWithSuffix + editingSuffix;
-  return path.join(dir, `${newBase}${ext}`);
 }
 
 export interface ConvertOptions {
