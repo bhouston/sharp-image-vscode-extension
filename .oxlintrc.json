@@ -1,18 +1,21 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "ignorePatterns": ["dist", "node_modules"],
+  "ignorePatterns": ["dist"],
   "categories": {
     "correctness": "error",
     "suspicious": "warn"
   },
-  "plugins": ["eslint", "typescript", "oxc", "unicorn"],
+  "plugins": ["eslint", "typescript", "oxc", "unicorn", "react", "jsx-a11y"],
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "eslint/no-underscore-dangle": "off",
+    "react/exhaustive-deps": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error"
   },
   "overrides": [
     {
-      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
-      "plugins": ["eslint", "typescript", "oxc", "unicorn"]
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx", "**/test/**", "**/tests/**"],
+      "plugins": ["eslint", "typescript", "oxc", "unicorn", "react", "jsx-a11y", "vitest"]
     }
   ]
 }
