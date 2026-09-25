@@ -23,9 +23,9 @@ Both are already configured. Dispatch `Release` on `main` (see above) when ready
 
 Semantic-release analyzes [Conventional Commits](https://www.conventionalcommits.org/) since the last `v*` tag. `feat` produces a minor release, `fix`/`perf` a patch, and `!` or `BREAKING CHANGE:` a major. The highest change wins. A docs/chore-only integration produces no release. There is no prior `v*` tag in this repository, so the first release establishes the baseline version from the commit history.
 
-`release.config.js` pins `package.json`'s `version` to the release version, then builds, packages (`vsce package`, via the existing `pnpm run package`), and publishes the resulting `.vsix` to the VS Code Marketplace and Open VSX Registry (`scripts/release-vscode-extension.mjs`). The extension is not published to npm — there is no npm package in this repository.
+`release.config.mjs` pins `package.json`'s `version` to the release version, then builds, packages (`vsce package`, via the existing `pnpm run package`), and publishes the resulting `.vsix` to the VS Code Marketplace and Open VSX Registry (`scripts/release-vscode-extension.mjs`). The extension is not published to npm — there is no npm package in this repository.
 
-Each GitHub Release contains generated release notes, `CHANGELOG.md` for that release, and the `.vsix`. `CHANGELOG.md` is committed back to `main` by `@semantic-release/changelog`.
+Each GitHub Release contains generated release notes and the `.vsix`. Releases never write back to `main`; the [GitHub Releases page](https://github.com/bhouston/sharp-image-vscode-extension/releases) is the changelog of record — there is no `CHANGELOG.md`.
 
 The release job waits for the complete CI suite (`ci.yml`, reused via `workflow_call`) and only runs from a manual dispatch against `main`.
 
@@ -35,4 +35,4 @@ Dispatching `release.yml` with `dry_run=true` runs the full workflow — includi
 
 ## Commit messages
 
-Commits on `main` should follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, etc.) — this is enforced locally by a Husky `commit-msg` hook running `commitlint` (`commitlint.config.js`).
+Commits on `main` should follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, etc.) — this is enforced locally by a Husky `commit-msg` hook running `commitlint` (`commitlint.config.mjs`).
