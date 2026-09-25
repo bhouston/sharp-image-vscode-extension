@@ -37,6 +37,7 @@
     "format": "oxfmt .",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
+    "test": "pnpm run tsc",
     "package": "pnpm run compile && node scripts/install-all-platforms.js && vsce package",
     "release": "semantic-release"
   },
