@@ -89,7 +89,8 @@ export async function applyEdit(uri: vscode.Uri, operation: EditOperation, optio
         throw new Error(`Unknown operation: ${operation}`);
     }
 
-    await pipeline.toFile(outputPath);
+    // toFile() refuses to overwrite its own input, which is the default (in-place) edit mode.
+    await fs.promises.writeFile(outputPath, await pipeline.toBuffer());
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     vscode.window.showErrorMessage(`Sharp Image Tools: ${message}`);
