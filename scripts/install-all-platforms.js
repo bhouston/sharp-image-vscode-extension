@@ -26,11 +26,11 @@
 
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync, mkdtempSync, cpSync, rmSync, mkdirSync } = require('fs');
-const { resolve, join } = require('path');
+const path = require('path');
 const { tmpdir } = require('os');
 
-const projectRoot = resolve(__dirname, '..');
-const sharpPkg = JSON.parse(readFileSync(resolve(projectRoot, 'node_modules/sharp/package.json'), 'utf8'));
+const projectRoot = path.resolve(__dirname, '..');
+const sharpPkg = JSON.parse(readFileSync(path.resolve(projectRoot, 'node_modules/sharp/package.json'), 'utf8'));
 const optDeps = sharpPkg.optionalDependencies ?? {};
 
 // The platforms we want bundled. Covers Windows x64, macOS arm64/x64, Linux x64/arm64.
@@ -51,10 +51,10 @@ const installSpecs = [`sharp@${sharpPkg.version}`, ...desiredImgPackages.map((pk
 console.log('Installing sharp + platform-specific packages for a universal build:');
 installSpecs.forEach((pkg) => console.log(`  ${pkg}`));
 
-const scratchDir = mkdtempSync(join(tmpdir(), 'sharp-platform-install-'));
-writeFileSync(join(scratchDir, 'package.json'), '{}\n');
+const scratchDir = mkdtempSync(path.join(tmpdir(), 'sharp-platform-install-'));
+writeFileSync(path.join(scratchDir, 'package.json'), '{}\n');
 
-const bundledModulesDir = resolve(projectRoot, 'dist/node_modules');
+const bundledModulesDir = path.resolve(projectRoot, 'dist/node_modules');
 rmSync(bundledModulesDir, { recursive: true, force: true });
 mkdirSync(bundledModulesDir, { recursive: true });
 
@@ -62,9 +62,9 @@ try {
   execSync(`npm install --force --no-save ${installSpecs.join(' ')}`, { cwd: scratchDir, stdio: 'inherit' });
   // Skip node_modules/.bin: CLI shims aren't needed (sharp is required
   // programmatically) and confuse vsce's packaging/secret-scanning step.
-  cpSync(join(scratchDir, 'node_modules'), bundledModulesDir, {
+  cpSync(path.join(scratchDir, 'node_modules'), bundledModulesDir, {
     recursive: true,
-    filter: (src) => !src.includes(`${join('node_modules', '.bin')}`),
+    filter: (src) => !src.includes(`${path.join('node_modules', '.bin')}`),
   });
 } finally {
   rmSync(scratchDir, { recursive: true, force: true });
