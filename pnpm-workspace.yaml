@@ -10,3 +10,14 @@ overrides:
   # loads the "conventionalcommits" preset by package name, so it resolves the incompatible v10
   # and fails in generateNotes. Pin to the version mtlx/hdrify also resolve to.
   conventional-changelog-conventionalcommits: 9.3.1
+
+  # security: patched versions of transitive deps (pnpm audit --audit-level high)
+  'picomatch@<2.3.2': ^2.3.2
+  'undici@>=7 <7.30.1': ^7.30.1
+  'undici@<7': ^6.29.1
+  'js-yaml@>=4 <4.3.2': ^4.3.2
+  'fast-uri@<3.1.7': ^3.1.7
+  'source-map-js@<1.2.2': ^1.2.2
+  'tinypool@<2.1.2': ^2.1.2
+  'handlebars@<4.7.10': ^4.7.10
+  'vite@>=8.3.0 <8.3.3': ^8.3.3
