@@ -86,7 +86,7 @@ export async function applyEdit(uri: vscode.Uri, operation: EditOperation, optio
         pipeline = pipeline.negate();
         break;
       default:
-        throw new Error(`Unknown operation: ${operation}`);
+        throw new Error(`Unknown operation: ${String(operation)}`);
     }
 
     // toFile() refuses to overwrite its own input, which is the default (in-place) edit mode.
