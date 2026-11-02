@@ -64,7 +64,7 @@ try {
   // programmatically) and confuse vsce's packaging/secret-scanning step.
   cpSync(path.join(scratchDir, 'node_modules'), bundledModulesDir, {
     recursive: true,
-    filter: (src) => !src.includes(`${path.join('node_modules', '.bin')}`),
+    filter: (src) => !src.includes(path.join('node_modules', '.bin')),
   });
 } finally {
   rmSync(scratchDir, { recursive: true, force: true });
