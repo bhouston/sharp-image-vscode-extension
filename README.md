@@ -76,9 +76,9 @@ By default, the extension **replaces** the existing file (overwrites for edits; 
 
 Enable **Leave original when changing format** or **Leave original when editing** to write to new files instead.
 
-## Releasing
+## Releases
 
-Releases are automated with [semantic-release](https://semantic-release.gitbook.io/) from [Conventional Commits](https://www.conventionalcommits.org/) on `main`. See [RELEASING.md](RELEASING.md) for how to dispatch a release and one-time setup.
+See [RELEASING.md](RELEASING.md) for how releases are published and [GitHub Releases](https://github.com/bhouston/sharp-image-vscode-extension/releases) for changes.
 
 ## Contribution
 
