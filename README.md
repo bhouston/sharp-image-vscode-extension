@@ -1,21 +1,38 @@
+<p align="center">
+  <a href="https://github.com/bhouston/sharp-image-vscode-extension" target="_blank" rel="noopener noreferrer">
+    <img alt="Sharp Image Tools logo" src="https://raw.githubusercontent.com/bhouston/sharp-image-vscode-extension/main/logo.png" height="96">
+  </a>
+</p>
+<br/>
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=benhouston3d.sharp-image"><img src="https://img.shields.io/open-vsx/v/benhouston3d/sharp-image.svg" alt="open vsx version"></a>
+  <a href="https://open-vsx.org/extension/benhouston3d/sharp-image"><img src="https://img.shields.io/open-vsx/dt/benhouston3d/sharp-image.svg" alt="open vsx downloads"></a>
+  <a href="https://codecov.io/gh/bhouston/sharp-image-vscode-extension"><img src="https://codecov.io/gh/bhouston/sharp-image-vscode-extension/branch/main/graph/badge.svg" alt="coverage"></a>
+  <a href="https://discord.gg/fwupDN493R"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
+</p>
+<br/>
+
 # Sharp Image Tools
+
+> Convert and edit images from the VS Code Explorer context menu.
+
+- 🖱️ Right-Click Image Conversion
+- 🔄 Eight Output Formats
+- ✂️ Rotate, Flip, Trim, and More
+- 📂 Multi-Select Batch Processing
+- ⚙️ Quality and Save-As Settings
+- 📦 Native Binaries for All Platforms
 
 A VS Code and Cursor extension that adds image conversion and editing to the Explorer context menu. Right-click any supported image file to convert it to another format or apply edits (rotate, flip, trim, etc.) using the [sharp](https://sharp.pixelplumbing.com/) library.
 
-Questions or need help? [Join our Discord](https://discord.gg/fwupDN493R).
-
 ## Installation
 
-- **VS Code**: Install from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/) (when published) or install from VSIX.
-- **Cursor**: Install from [Open VSX](https://open-vsx.org/) (when published) or install from VSIX.
+- **VS Code**: Install from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=benhouston3d.sharp-image) or install from VSIX.
+- **Cursor**: Install from [Open VSX](https://open-vsx.org/extension/benhouston3d/sharp-image) or install from VSIX.
 
 To install from VSIX: run `npm run package`, then use **Extensions: Install from VSIX...** and select the generated `.vsix` file.
 
 `npm run package` produces a **single ~40 MB VSIX with native binaries for all major platforms** — Windows x64, macOS arm64/x64, and Linux x64/arm64. It works out of the box on any of those platforms without recompilation.
-
-## Releasing
-
-Releases are automated with [semantic-release](https://semantic-release.gitbook.io/) from [Conventional Commits](https://www.conventionalcommits.org/) on `main`. See [RELEASING.md](RELEASING.md) for how to dispatch a release and one-time setup.
 
 ## Usage
 
@@ -59,9 +76,13 @@ By default, the extension **replaces** the existing file (overwrites for edits; 
 
 Enable **Leave original when changing format** or **Leave original when editing** to write to new files instead.
 
-## Contributing
+## Releases
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue → branch → PR workflow and local checks.
+See [RELEASING.md](RELEASING.md) for how releases are published and [GitHub Releases](https://github.com/bhouston/sharp-image-vscode-extension/releases) for changes.
+
+## Contribution
+
+See [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
@@ -69,4 +90,4 @@ MIT
 
 ## Author
 
-[Ben Houston](https://ben3d.ca), Sponsored by [Land of Assets](https://landofassets.com)
+[Ben Houston](https://ben3d.ca), Sponsored by [Land of Assets](https://landofassets.com).
