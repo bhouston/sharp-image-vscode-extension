@@ -1,38 +1,66 @@
-# Releases
+# Releasing
 
-## Running a release
+Releases are manual and maintainer-only. Merging to `main` never publishes.
 
-Releases are never triggered by pushes or merges to `main`. When ready to publish, the maintainer dispatches the workflow:
+## Running a Release
 
 ```sh
-gh workflow run release.yml --ref main
+gh workflow run release.yml --ref main                  # release
+gh workflow run release.yml --ref main -f dry_run=true  # preview only, publishes nothing
 ```
 
-Add `-f dry_run=true` to validate versioning and the changelog without publishing or tagging. The workflow refuses to run against any ref other than `main`. If there are no release-worthy commits since the last tag, the run succeeds as a no-op and says so in the run summary.
+When there are no release-worthy commits since the last `v*` tag, the run is a no-op.
 
-## One-time activation
+## What the Workflow Does
 
-The workflow is installed in `.github/workflows/release.yml` and requires two repository secrets:
+1. Refuses any ref other than `main`.
+2. Runs the full CI workflow on the dispatched commit.
+3. Stops if `main` has moved since the dispatch.
+4. Installs, builds, and runs `pnpm release`, which is semantic-release.
+5. semantic-release computes the next version, creates the `v<version>` tag and GitHub Release, and publishes.
 
-- `VSCE_PAT` — an Azure DevOps personal access token for the `benhouston3d` publisher, used to publish to the VS Code Marketplace.
-- `OVSX_PAT` — an Open VSX access token, used to publish to the Open VSX Registry (the registry Cursor and other VS Code-compatible editors use).
+Releases run one at a time and never cancel a publish in progress. npm packages publish through npm trusted publishing (GitHub OIDC), so no `NPM_TOKEN` is stored.
 
-Both are already configured. Dispatch `Release` on `main` (see above) when ready to publish.
+## Versioning
 
-## Versioning and artifacts
+The version comes from the Conventional Commits since the last `v*` tag. The highest change wins:
 
-Semantic-release analyzes [Conventional Commits](https://www.conventionalcommits.org/) since the last `v*` tag. `feat` produces a minor release, `fix`/`perf` a patch, and `!` or `BREAKING CHANGE:` a major. The highest change wins. A docs/chore-only integration produces no release. There is no prior `v*` tag in this repository, so the first release establishes the baseline version from the commit history.
+- `feat` produces a minor release.
+- `fix` and `perf` produce a patch release.
+- `!` or a `BREAKING CHANGE:` footer produces a major release.
+- Other types do not trigger a release.
 
-`release.config.mjs` pins `package.json`'s `version` to the release version, then builds, packages (`vsce package`, via the existing `pnpm run package`), and publishes the resulting `.vsix` to the VS Code Marketplace and Open VSX Registry (`scripts/release-vscode-extension.mjs`). The extension is not published to npm — there is no npm package in this repository.
+Everything this repository publishes shares one version. `package.json` versions in source are development snapshots; the Git tag and the registry hold the released version. [GitHub Releases](https://github.com/bhouston/sharp-image-vscode-extension/releases) is the changelog of record.
 
-Each GitHub Release contains generated release notes and the `.vsix`. Releases never write back to `main`; the [GitHub Releases page](https://github.com/bhouston/sharp-image-vscode-extension/releases) is the changelog of record — there is no `CHANGELOG.md`.
+## One-Time Setup
 
-The release job waits for the complete CI suite (`ci.yml`, reused via `workflow_call`) and only runs from a manual dispatch against `main`.
+1. On npmjs.com, open each package's Trusted Publisher settings, choose GitHub Actions, and enter organization or user `bhouston`, repository `sharp-image-vscode-extension`, workflow filename `release.yml`, and environment name `npm`.
+2. Protect `main`: require pull requests and the CI checks, allow merge commits, and block force pushes and deletion.
+3. If the repository uploads coverage to Codecov, add the `CODECOV_TOKEN` repository secret.
 
-## Validation
+## Recovery
 
-Dispatching `release.yml` with `dry_run=true` runs the full workflow — including CI — and previews what semantic-release would do, without publishing or tagging.
+Publishing is not atomic. If a run fails part way, compare the registry versions, the `v<version>` tag, and the workflow log, then finish what is missing from the same release commit. If publishing succeeded but the GitHub Release failed, create the release from the existing tag. Never republish a version, delete a published version, or move a release tag. Resolve the failure before dispatching another release.
 
-## Commit messages
+## Repository Specifics
 
-Commits on `main` should follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, etc.) — this is enforced locally by a Husky `commit-msg` hook running `commitlint` (`commitlint.config.mjs`).
+### Published Artifacts
+
+- VS Code Marketplace and Open VSX: `sharp-image`, published by `benhouston3d`. Each GitHub Release attaches the `.vsix`.
+
+No npm package is published.
+
+### VS Code Extension
+
+`release.config.mjs` pins `package.json`'s version to the release version. `scripts/release-vscode-extension.mjs` then runs `pnpm run package` (compile and `vsce package`) and publishes the `.vsix` to both registries. Add these repository secrets:
+
+- `VSCE_PAT`: Azure DevOps personal access token for the `benhouston3d` publisher.
+- `OVSX_PAT`: Open VSX access token.
+
+### Differences From the Standard
+
+This repository publishes no npm package, so skip One-Time Setup step 1 (npm Trusted Publisher) and ignore the npm trusted publishing sentence under What the Workflow Does. The `release` job still runs in the `npm` environment, so that environment must exist.
+
+### Required Checks
+
+`main` requires the `ci` and `contribution` checks.
