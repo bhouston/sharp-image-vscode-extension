@@ -5,3 +5,8 @@ coverage/
 .DS_Store
 *.env
 package-lock.json
+
+# Agent tooling
+.claude/
+.codex/
+.cursor/
